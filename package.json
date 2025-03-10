@@ -16,7 +16,9 @@
   },
   "devDependencies": {
     "@types/chrome": "^0.0.280",
+    "lodash": "^4.17.21",
     "typescript": "^5.6.3",
+    "vitest": "^3.0.8",
     "wxt": "^0.19.29"
   },
   "dependencies": {
