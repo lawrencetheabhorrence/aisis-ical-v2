@@ -1,38 +1,39 @@
-import dayjs from "dayjs";
+import dayjs from "./dayjs";
 import type { Dayjs } from "dayjs";
-
-export const startDate: Record<string, Record<string, Dayjs>> = {
-  "2024-0": {
-    'MO': dayjs('20240610'),
-    'TU': dayjs('20240611'),
-    'WE': dayjs('20240605'),
-    'TH': dayjs('20240606'),
-    'FR': dayjs('20240607'),
-    'SA': dayjs('20240608')
-  },
-  "2024-1": {
-    'MO': dayjs('20240812'),
-    'TU': dayjs('20240813'),
-    'WE': dayjs('20240807'),
-    'TH': dayjs('20240808'),
-    'FR': dayjs('20240809'),
-    'SA': dayjs('20240810')
-  },
-  "2024-2": {
-    'MO': dayjs('20250120'),
-    'TU': dayjs('20250121'),
-    'WE': dayjs('20250115'),
-    'TH': dayjs('20250116'),
-    'FR': dayjs('20250117'),
-    'SA': dayjs('20250118'),
-  }
-}
 
 export const endDate: Record<string, Dayjs> = { '2024-0': dayjs('20240720'), '2024-1': dayjs('20241128'), '2024-2': dayjs('20250524') };
 export const nextSem = "2025-0";
 export const nowSem = "2024-2";
 
 export type WeekdayLiteral = 'MO' | 'TU' | 'WE' | 'TH' | 'FR' | 'SA';
+export const startDate: Record<string, Record<WeekdayLiteral, Dayjs>> = {
+  "2024-0": {
+    'MO': dayjs('2024-06-10'),
+    'TU': dayjs('2024-06-11'),
+    'WE': dayjs('2024-06-05'),
+    'TH': dayjs('2024-06-06'),
+    'FR': dayjs('2024-06-07'),
+    'SA': dayjs('2024-06-08')
+  },
+  "2024-1": {
+    'MO': dayjs('2024-08-12'),
+    'TU': dayjs('2024-08-13'),
+    'WE': dayjs('2024-08-07'),
+    'TH': dayjs('2024-08-08'),
+    'FR': dayjs('2024-08-09'),
+    'SA': dayjs('2024-08-10')
+  },
+  "2024-2": {
+    'MO': dayjs('2025-01-20'),
+    'TU': dayjs('2025-01-21'),
+    'WE': dayjs('2025-01-15'),
+    'TH': dayjs('2025-01-16'),
+    'FR': dayjs('2025-01-17'),
+    'SA': dayjs('2025-01-18'),
+  },
+}
+
+
 export const weekdaysDict: Record<string, WeekdayLiteral> = {
   'M': 'MO',
   'T': 'TU',
