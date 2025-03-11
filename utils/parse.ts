@@ -1,17 +1,17 @@
 import type { Dayjs } from "dayjs";
-import type { WeekdayLiteral } from "./constants";
 import { closestStartDate, convertWeekdays, getHoursMinutes } from "./utils";
+import { ICalCalendar, ICalEventRepeatingFreq, ICalRepeatingOptions, ICalWeekday } from "ical-generator";
 
 export interface IntermediateEventData {
   location: string,
-  weekdays: WeekdayLiteral[],
+  weekdays: ICalWeekday[],
   start: Dayjs,
   end: Dayjs,
 }
 
 
 function weekdayStartFromPrefix(prefix: string): {
-  weekdays: WeekdayLiteral[],
+  weekdays: ICalWeekday[],
   start: Dayjs,
   end: Dayjs,
 } {
@@ -57,4 +57,19 @@ export function parseIntermediateEventData(eventDetails: string): IntermediateEv
 
     return [firstEvent, ...restEvents];
   }
+}
+
+export function intermediateEventDatatoIcalEvent(prof: string, subject: string, calendar: ICalCalendar, eventData: IntermediateEventData) {
+  const repeating: ICalRepeatingOptions = {
+    byDay: eventData.weekdays, freq: ICalEventRepeatingFreq.WEEKLY
+  };
+  const icalEvent = calendar.createEvent({
+    start: eventData.start,
+    end: eventData.end,
+    repeating,
+    location: eventData.location,
+    summary: subject,
+    description: prof,
+  });
+  return icalEvent;
 }
