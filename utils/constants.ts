@@ -1,3 +1,4 @@
+import { ICalWeekday } from "ical-generator";
 import dayjs from "./dayjs";
 import type { Dayjs } from "dayjs";
 
@@ -5,9 +6,9 @@ export const endDate: Record<string, Dayjs> = { '2024-0': dayjs('20240720'), '20
 export const nextSem = "2025-0";
 export const nowSem = "2024-2";
 
-export type WeekdayLiteral = 'MO' | 'TU' | 'WE' | 'TH' | 'FR' | 'SA';
-export const startDate: Record<string, Record<WeekdayLiteral, Dayjs>> = {
+export const startDate: Record<string, Record<ICalWeekday, Dayjs>> = {
   "2024-0": {
+    'SU': dayjs(),
     'MO': dayjs('2024-06-10'),
     'TU': dayjs('2024-06-11'),
     'WE': dayjs('2024-06-05'),
@@ -16,6 +17,7 @@ export const startDate: Record<string, Record<WeekdayLiteral, Dayjs>> = {
     'SA': dayjs('2024-06-08')
   },
   "2024-1": {
+    'SU': dayjs(),
     'MO': dayjs('2024-08-12'),
     'TU': dayjs('2024-08-13'),
     'WE': dayjs('2024-08-07'),
@@ -24,6 +26,7 @@ export const startDate: Record<string, Record<WeekdayLiteral, Dayjs>> = {
     'SA': dayjs('2024-08-10')
   },
   "2024-2": {
+    'SU': dayjs(),
     'MO': dayjs('2025-01-20'),
     'TU': dayjs('2025-01-21'),
     'WE': dayjs('2025-01-15'),
@@ -34,11 +37,11 @@ export const startDate: Record<string, Record<WeekdayLiteral, Dayjs>> = {
 }
 
 
-export const weekdaysDict: Record<string, WeekdayLiteral> = {
-  'M': 'MO',
-  'T': 'TU',
-  'W': 'WE',
-  'TH': 'TH',
-  'F': 'FR',
-  'S': 'SA'
+export const weekdaysDict: Record<string, ICalWeekday> = {
+  'M': ICalWeekday.MO,
+  'T': ICalWeekday.TU,
+  'W': ICalWeekday.WE,
+  'TH': ICalWeekday.TH,
+  'F': ICalWeekday.FR,
+  'S': ICalWeekday.SA
 };
