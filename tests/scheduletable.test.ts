@@ -152,3 +152,9 @@ test('simplify whole sched', () => {
 
   expect(result).toHaveLength(6);
 })
+
+test('set event to closest start date', () => {
+  const result = setEventToClosestStartDate(phys);
+  expect(result.start.isSame(startDate[nowSem]['MO'], "day")).toBe(true);
+  expect(result.end.isSame(startDate[nowSem]['MO'], "day")).toBe(true);
+});

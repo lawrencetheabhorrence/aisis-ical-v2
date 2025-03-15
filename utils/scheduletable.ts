@@ -72,8 +72,9 @@ export function mergeCellsInColumn(cells: EventColumn): EventColumn {
 
 export function setEventToClosestStartDate(event: IntermediateEventData): IntermediateEventData {
   const closestDate: Dayjs = closestStartDate(event.weekdays);
-  const newStart = event.start.month(closestDate.month()).day(closestDate.day()).year(closestDate.year());
-  const newEnd = event.start.month(closestDate.month()).day(closestDate.day()).year(closestDate.year());
+  const newStart = event.start.month(closestDate.month()).date(closestDate.date()).year(closestDate.year());
+  console.log("new start:", newStart);
+  const newEnd = event.start.month(closestDate.month()).date(closestDate.date()).year(closestDate.year());
   return { ...event, start: newStart, end: newEnd };
 }
 
