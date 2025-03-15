@@ -3,11 +3,15 @@ import { closestStartDate, convertWeekdays, getHoursMinutes } from "./utils";
 import { ICalCalendar, ICalEventRepeatingFreq, ICalRepeatingOptions, ICalWeekday } from "ical-generator";
 
 export interface IntermediateEventData {
+  prof?: string,
+  section?: string,
+  subject?: string,
   location: string,
   weekdays: ICalWeekday[],
   start: Dayjs,
   end: Dayjs,
 }
+
 
 
 function weekdayStartFromPrefix(prefix: string): {
