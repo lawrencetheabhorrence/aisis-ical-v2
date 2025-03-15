@@ -15,9 +15,15 @@ test('parse one event', () => {
 
 test('parse event cell text', () => {
   const sampleText = "PHYS 160\nAW CTC 506 (FULLY ONSITE)";
+  const sampleText2 = "MATH 51.4\nST1B SEC-A209 (FULLY ONSITE)";
   const result = eventCellTextToIntermediateEventData(sampleText, ICalWeekday.MO, dayjs(), dayjs());
 
   expect(result.subject).toBe("PHYS 160");
   expect(result.section).toBe("AW");
   expect(result.location).toBe("CTC 506");
+
+  const result2 = eventCellTextToIntermediateEventData(sampleText2, ICalWeekday.MO, dayjs(), dayjs());
+  expect(result2.subject).toBe("MATH 51.4");
+  expect(result2.section).toBe("ST1B");
+  expect(result2.location).toBe("SEC-A209");
 })
