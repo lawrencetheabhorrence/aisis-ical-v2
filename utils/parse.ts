@@ -1,6 +1,7 @@
 import type { Dayjs } from "dayjs";
 import { closestStartDate, convertWeekdays, getHoursMinutes } from "./utils";
 import { ICalCalendar, ICalEventRepeatingFreq, ICalRepeatingOptions, ICalWeekday } from "ical-generator";
+import { endDate, nowSem } from "./constants";
 
 export interface IntermediateEventData {
   prof?: string,
@@ -65,7 +66,7 @@ export function parseIntermediateEventData(eventDetails: string): IntermediateEv
 
 export function intermediateEventDatatoIcalEvent(prof: string, subject: string, calendar: ICalCalendar, eventData: IntermediateEventData) {
   const repeating: ICalRepeatingOptions = {
-    byDay: eventData.weekdays, freq: ICalEventRepeatingFreq.WEEKLY
+    byDay: eventData.weekdays, freq: ICalEventRepeatingFreq.WEEKLY, until: endDate[nowSem]
   };
   const icalEvent = calendar.createEvent({
     start: eventData.start,
