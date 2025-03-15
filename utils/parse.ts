@@ -86,11 +86,11 @@ export function eventCellTextToIntermediateEventData(cell: string, weekday: ICal
    */
 
   const [subject, rest] = cell.split('\n');
-  const [section, location, _] = rest.split(' ');
+  const [section, room, roomnum, _] = rest.split(' ');
   return {
     subject,
     section,
-    location,
+    location: `${room} ${roomnum}`,
     weekdays: [weekday],
     start,
     end
