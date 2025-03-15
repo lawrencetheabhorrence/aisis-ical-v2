@@ -18,11 +18,9 @@ export function mergeCellsInColumn(cells: EventColumn): EventColumn {
       }
     }
 
-    /*
     if (s1.start.isAfter(s2.start, 'minute')) {
       return connectTwoEventsByTime(s2, s1);
     }
-    */
 
     if (!s1.end.isSame(s2.start, "minute")) {
       throw new Error('These two events do not connect.');
