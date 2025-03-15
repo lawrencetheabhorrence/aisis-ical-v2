@@ -79,7 +79,7 @@ export function intermediateEventDatatoIcalEvent(prof: string, subject: string, 
   return icalEvent;
 }
 
-function eventCellTextToIntermediateEventData(cell: string, weekday: ICalWeekday, start: Dayjs, end: Dayjs): IntermediateEventData {
+export function eventCellTextToIntermediateEventData(cell: string, weekday: ICalWeekday, start: Dayjs, end: Dayjs): IntermediateEventData {
   /**
    * SAMPLE TEXT:
    * "PHYS 160\nAW CTC 506 (FULLY ONSITE)"
