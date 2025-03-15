@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { mergeCellsInColumn, type EventColumn } from "../utils/scheduletable";
+import { isEventSameSubject, isEventSameSubjectSameTime, mergeCellsInColumn, mergeSubjectByWeekday, type EventColumn } from "../utils/scheduletable";
 import { ICalWeekday } from 'ical-generator';
 import dayjs from '../utils/dayjs';
 import { IntermediateEventData } from '@/utils/parse';
@@ -81,4 +81,28 @@ test('merge Monday schedule', () => {
 
   const result = mergeCellsInColumn(subjects);
   expect(result).toHaveLength(4);
+});
+
+test('merge subject by weekday', () => {
+  const physWed: IntermediateEventData = { ...phys, weekdays: [ICalWeekday.TH] };
+  const physMerged = mergeSubjectByWeekday([phys, physWed]);
+
+  expect(physMerged.weekdays).toHaveLength(2);
+  expect(physMerged.weekdays).toContain(ICalWeekday.MO);
+  expect(physMerged.weekdays).toContain(ICalWeekday.TH);
+});
+
+test('is event same subject', () => {
+  const result = isEventSameSubject(phys, phys2);
+  expect(result).toBe(true);
+
+  const wrongResult = isEventSameSubject(phys, csci);
+  expect(wrongResult).toBe(false);
+});
+
+test('is event same subject same time', () => {
+  const resultDifferentTime = isEventSameSubjectSameTime(phys, phys2);
+  expect(resultDifferentTime).toBe(false);
+  const correctResult = isEventSameSubjectSameTime(phys, phys);
+  expect(correctResult).toBe(true);
 });

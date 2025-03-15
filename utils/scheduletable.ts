@@ -1,21 +1,43 @@
-import type { ICalWeekday } from "ical-generator";
+import { ICalWeekday } from "ical-generator";
 import type { IntermediateEventData } from "./parse";
 import * as R from "remeda";
 
 export type EventColumn = IntermediateEventData[];
 export type ScheduleTable = Record<ICalWeekday, EventColumn>;
 
+export function mergeSubjectByWeekday(events: IntermediateEventData[]): IntermediateEventData {
+  if (events.length < 1) {
+    throw Error('No events passed to this function!');
+  }
+
+  const checkedEvent = events[0];
+  let weekendsNew: Set<ICalWeekday> = new Set<ICalWeekday>();
+  for (const event of events) {
+    if (!isEventSameSubjectSameTime(event, checkedEvent)) {
+      throw Error('Not all events are the same subject');
+    }
+    weekendsNew = weekendsNew.union(new Set(event.weekdays));
+  }
+
+  return { ...checkedEvent, weekdays: Array.from(weekendsNew) };
+}
+
+export function isEventSameSubject(s1: IntermediateEventData, s2: IntermediateEventData): boolean {
+  const s1_no_time = R.omit(s1, ["start", "end", "weekdays"]);
+  const s2_no_time = R.omit(s2, ["start", "end", "weekdays"]);
+  return R.isDeepEqual(s1_no_time, s2_no_time);
+}
+
+export function isEventSameSubjectSameTime(s1: IntermediateEventData, s2: IntermediateEventData): boolean {
+  return isEventSameSubject(s1, s2) && s1.start.isSame(s2.start, 'minute') && s1.end.isSame(s2.end, 'minute')
+}
+
 export function mergeCellsInColumn(cells: EventColumn): EventColumn {
   let merged: EventColumn = [];
 
   function connectTwoEventsByTime(s1: IntermediateEventData, s2: IntermediateEventData): IntermediateEventData {
-    for (const prop in s1) {
-      if (prop == 'start' || prop == 'end') {
-        continue;
-      }
-      if ((s1 as any)[prop] !== (s2 as any)[prop]) {
-        throw new Error('Events are not the same subject');
-      }
+    if (!isEventSameSubject(s1, s2)) {
+      throw new Error('Events are not the same subject');
     }
 
     if (s1.start.isAfter(s2.start, 'minute')) {
