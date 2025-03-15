@@ -149,7 +149,6 @@ test('simplify whole sched', () => {
   };
 
   const result = simplifySchedule(sched);
-  console.log(result);
 
   expect(result).toHaveLength(6);
 })
