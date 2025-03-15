@@ -1,6 +1,8 @@
 import { ICalWeekday } from "ical-generator";
 import type { IntermediateEventData } from "./parse";
 import * as R from "remeda";
+import { closestStartDate } from "./utils";
+import { Dayjs } from "dayjs";
 
 export type EventColumn = IntermediateEventData[];
 export type ScheduleTable = Record<ICalWeekday, EventColumn>;
@@ -66,4 +68,21 @@ export function mergeCellsInColumn(cells: EventColumn): EventColumn {
 
   merged.push(currentEvent);
   return merged;
+}
+
+export function setEventToClosestStartDate(event: IntermediateEventData): IntermediateEventData {
+  const closestDate: Dayjs = closestStartDate(event.weekdays);
+  const newStart = event.start.month(closestDate.month()).day(closestDate.day()).year(closestDate.year());
+  const newEnd = event.start.month(closestDate.month()).day(closestDate.day()).year(closestDate.year());
+  return { ...event, start: newStart, end: newEnd };
+}
+
+export function simplifySchedule(schedule: ScheduleTable): IntermediateEventData[] {
+  const simplifiedColumns = R.mapValues(schedule, (v) => (v.length > 0 ? mergeCellsInColumn(v) : []));
+  const allEvents: IntermediateEventData[] = R.values(simplifiedColumns).flat();
+  const groupedEvents = R.groupBy(allEvents, (e: IntermediateEventData) => (`${e.subject} ${e.section} ${e.location}`));
+
+  const simplifiedByWeekday = R.mapValues(groupedEvents, mergeSubjectByWeekday);
+
+  return R.values(simplifiedByWeekday).flat().map(setEventToClosestStartDate);
 }

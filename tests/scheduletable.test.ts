@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { isEventSameSubject, isEventSameSubjectSameTime, mergeCellsInColumn, mergeSubjectByWeekday, type EventColumn } from "../utils/scheduletable";
+import { isEventSameSubject, isEventSameSubjectSameTime, mergeCellsInColumn, mergeSubjectByWeekday, ScheduleTable, simplifySchedule, type EventColumn } from "../utils/scheduletable";
 import { ICalWeekday } from 'ical-generator';
 import dayjs from '../utils/dayjs';
 import { IntermediateEventData } from '@/utils/parse';
@@ -65,6 +65,30 @@ const pe2 = { ...pe };
 pe2.start = dayjs().hour(17).minute(0);
 pe2.end = pe2.start.add(30, 'minute');
 
+const histo: IntermediateEventData = {
+  section: 'J1',
+  subject: 'HISTO 12',
+  location: 'BEL-208',
+  weekdays: [ICalWeekday.TU],
+  start: dayjs().hour(8).minute(0),
+  end: dayjs().hour(8).minute(30),
+};
+
+const histo2 = { ...histo, start: histo.end, end: histo.end.add(30, 'minute') };
+const histo3 = { ...histo2, start: histo2.end, end: histo2.end.add(30, 'minute') };
+
+const theo: IntermediateEventData = {
+  section: 'K',
+  subject: 'THEO 12',
+  location: 'CTC 106',
+  weekdays: [ICalWeekday.TU],
+  start: dayjs().hour(9).minute(30),
+  end: dayjs().hour(10).minute(0),
+};
+
+const theo2 = { ...theo, start: theo.end, end: theo.end.add(30, 'minute') };
+const theo3 = { ...theo2, start: theo2.end, end: theo2.end.add(30, 'minute') };
+
 test('merge one subject', () => {
   const subjects: EventColumn = [phys, phys2, phys3];
   const result = mergeCellsInColumn(subjects);
@@ -106,3 +130,26 @@ test('is event same subject same time', () => {
   const correctResult = isEventSameSubjectSameTime(phys, phys);
   expect(correctResult).toBe(true);
 });
+
+test('simplify whole sched', () => {
+  function setWd(event: IntermediateEventData, weekday: ICalWeekday): IntermediateEventData {
+    return { ...event, weekdays: [weekday] };
+  }
+
+  const monThur = [phys, phys2, phys3, csci, csci2, csci3, jpn, jpn2, jpn3, pe, pe2];
+  const tueFri = [histo, histo2, histo3, theo, theo2, theo3];
+  const sched: ScheduleTable = {
+    'MO': monThur,
+    'TU': tueFri,
+    'WE': [],
+    'TH': monThur.map((e: IntermediateEventData) => setWd(e, ICalWeekday.TH)),
+    'FR': tueFri.map((e: IntermediateEventData) => setWd(e, ICalWeekday.FR)),
+    'SA': [],
+    'SU': [],
+  };
+
+  const result = simplifySchedule(sched);
+  console.log(result);
+
+  expect(result).toHaveLength(6);
+})
