@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import timezone from 'dayjs/plugin/timezone';
+import timezone from "dayjs/plugin/timezone";
 
 // https://stackoverflow.com/questions/68715540/dayjs-is-in-the-wrong-timezone
 
