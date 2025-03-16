@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
       - run: |
-          npm ci
+          npm i
           npx prettier . --write
       - uses: autofix-ci/action@v1
         with:
