@@ -1,5 +1,6 @@
 import { ICalWeekday } from "ical-generator";
 import type { IntermediateEventData } from "./parse";
+import { isEventSameSubjectSameTime, isEventSameSubject } from "./utils";
 import * as R from "remeda";
 
 export type EventColumn = IntermediateEventData[];
@@ -25,7 +26,7 @@ export function mergeSubjectByWeekday(
 }
 
 export function mergeCellsInColumn(cells: EventColumn): EventColumn {
-  let merged: EventColumn = [];
+  const merged: EventColumn = [];
 
   function connectTwoEventsByTime(
     s1: IntermediateEventData,
