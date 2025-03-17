@@ -1,8 +1,6 @@
 import { ICalWeekday } from "ical-generator";
 import type { IntermediateEventData } from "./parse";
 import * as R from "remeda";
-import { closestStartDate } from "./utils";
-import { Dayjs } from "dayjs";
 
 export type EventColumn = IntermediateEventData[];
 export type ScheduleTable = Record<ICalWeekday, EventColumn>;
@@ -24,26 +22,6 @@ export function mergeSubjectByWeekday(
   }
 
   return { ...checkedEvent, weekdays: Array.from(weekendsNew) };
-}
-
-export function isEventSameSubject(
-  s1: IntermediateEventData,
-  s2: IntermediateEventData,
-): boolean {
-  const s1_no_time = R.omit(s1, ["start", "end", "weekdays"]);
-  const s2_no_time = R.omit(s2, ["start", "end", "weekdays"]);
-  return R.isDeepEqual(s1_no_time, s2_no_time);
-}
-
-export function isEventSameSubjectSameTime(
-  s1: IntermediateEventData,
-  s2: IntermediateEventData,
-): boolean {
-  return (
-    isEventSameSubject(s1, s2) &&
-    s1.start.isSame(s2.start, "minute") &&
-    s1.end.isSame(s2.end, "minute")
-  );
 }
 
 export function mergeCellsInColumn(cells: EventColumn): EventColumn {
@@ -85,25 +63,10 @@ export function mergeCellsInColumn(cells: EventColumn): EventColumn {
   return merged;
 }
 
-export function setEventToClosestStartDate(
-  event: IntermediateEventData,
-): IntermediateEventData {
-  const closestDate: Dayjs = closestStartDate(event.weekdays);
-  const newStart = event.start
-    .month(closestDate.month())
-    .date(closestDate.date())
-    .year(closestDate.year());
-  const newEnd = event.end
-    .month(closestDate.month())
-    .date(closestDate.date())
-    .year(closestDate.year());
-  return { ...event, start: newStart, end: newEnd };
-}
-
 export function simplifySchedule(
   schedule: ScheduleTable,
 ): IntermediateEventData[] {
-  const simplifiedColumns = R.mapValues(schedule, (v) =>
+  const simplifiedColumns = R.mapValues(schedule, (v: EventColumn) =>
     v.length > 0 ? mergeCellsInColumn(v) : [],
   );
   const allEvents: IntermediateEventData[] = R.values(simplifiedColumns).flat();
