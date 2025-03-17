@@ -1,5 +1,9 @@
 import { expect, test } from "vitest";
-import { closestStartDate, isEventSameSubject, isEventSameSubjectSameTime } from "../utils/utils";
+import {
+  closestStartDate,
+  isEventSameSubject,
+  isEventSameSubjectSameTime,
+} from "../utils/utils";
 import { ICalWeekday } from "ical-generator";
 import { startDate, nowSem } from "../utils/constants";
 
@@ -14,11 +18,11 @@ const phys: IntermediateEventData = {
 
 const phys2 = { ...phys };
 phys2.start = phys.end;
-phys2.end = phys2.start.add(30, 'minute');
+phys2.end = phys2.start.add(30, "minute");
 
 const phys3 = { ...phys2 };
 phys3.start = phys2.end;
-phys3.end = phys3.start.add(30, 'minute');
+phys3.end = phys3.start.add(30, "minute");
 
 const csci: IntermediateEventData = {
   section: "D",
@@ -30,8 +34,12 @@ const csci: IntermediateEventData = {
 };
 
 test("Closest start date should choose the earliest day within the given weekdays", () => {
-  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.FR])).toBe(startDate[nowSem]["FR"]);
-  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.TH])).toBe(startDate[nowSem]["TH"]);
+  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.FR])).toBe(
+    startDate[nowSem]["FR"],
+  );
+  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.TH])).toBe(
+    startDate[nowSem]["TH"],
+  );
 });
 
 test("is event same subject", () => {

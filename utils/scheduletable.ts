@@ -36,20 +36,24 @@ export function mergeCellsInColumn(cells: EventColumn): EventColumn {
       return connectTwoEventsByTime(s2, s1);
     }
 
-
     const result = { ...s1 };
     result.end = s2.end;
     return { ...s1, end: s2.end };
   }
 
   function isConnecting(s1: IntermediateEventData, s2: IntermediateEventData) {
-    return s1.end.isSame(s2.start, "minute") || s2.end.isSame(s1.start, "minute");
+    return (
+      s1.end.isSame(s2.start, "minute") || s2.end.isSame(s1.start, "minute")
+    );
   }
 
   let currentEvent = cells[0];
 
   for (let i = 1; i < cells.length; ++i) {
-    if (!isEventSameSubject(currentEvent, cells[i]) || !isConnecting(currentEvent, cells[i]))
+    if (
+      !isEventSameSubject(currentEvent, cells[i]) ||
+      !isConnecting(currentEvent, cells[i])
+    )
       break;
 
     currentEvent = connectTwoEventsByTime(currentEvent, cells[i]);
