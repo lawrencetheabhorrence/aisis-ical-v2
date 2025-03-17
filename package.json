@@ -18,15 +18,14 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/chrome": "^0.0.280",
-    "lodash": "^4.17.21",
-    "remeda": "^2.21.1",
-    "typescript": "^5.6.3",
-    "vitest": "^3.0.8",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
+    "lodash": "^4.17.21",
     "prettier": "^3.5.3",
+    "remeda": "^2.21.1",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1",
+    "vitest": "^3.0.8",
     "wxt": "^0.19.29"
   },
   "dependencies": {
