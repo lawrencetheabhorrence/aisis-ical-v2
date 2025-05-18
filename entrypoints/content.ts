@@ -31,7 +31,7 @@ function createCalButton(calendar: ICalCalendar) {
   calLink.setAttribute(
     "href",
     "data:text/calendar;charset=utf8," +
-    encodeURIComponent(calendar.toString()),
+      encodeURIComponent(calendar.toString()),
   );
   calLink.setAttribute("download", "class_schedule.ics");
 
@@ -111,7 +111,9 @@ export default defineContentScript({
         const button = createCalButton(calendar);
         const buttonTd = document.createElement("td");
         buttonTd.appendChild(button);
-        const printButtonTd = document.querySelector("td > input[value='Printer Friendly Version']").parentElement;
+        const printButtonTd = document.querySelector(
+          "td > input[value='Printer Friendly Version']",
+        ).parentElement;
         if (printButtonTd) {
           printButtonTd.insertAdjacentElement("afterend", buttonTd);
         }
