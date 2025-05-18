@@ -24,12 +24,14 @@ function createCalButton(calendar: ICalCalendar) {
   calLink.style.paddingInline = "6px";
   calLink.style.paddingBlock = "1px";
   calLink.style.border = "2px solid buttonborder";
+  calLink.style.display = "block";
+  calLink.style.width = "max-content";
 
   calLink.textContent = "Export to Calendar";
   calLink.setAttribute(
     "href",
     "data:text/calendar;charset=utf8," +
-      encodeURIComponent(calendar.toString()),
+    encodeURIComponent(calendar.toString()),
   );
   calLink.setAttribute("download", "class_schedule.ics");
 
@@ -51,6 +53,7 @@ export default defineContentScript({
     "*://aisis.ateneo.edu/j_aisis/J_VMCS.do",
   ],
   main() {
+    // My Class Schedule
     if (window.location.href === "https://aisis.ateneo.edu/j_aisis/J_VMCS.do") {
       const schedtable: HTMLTableElement | null =
         document.querySelector('[width="90%"]');
@@ -106,7 +109,12 @@ export default defineContentScript({
         }
 
         const button = createCalButton(calendar);
-        schedtable.prepend(button);
+        const buttonTd = document.createElement("td");
+        buttonTd.appendChild(button);
+        const printButtonTd = document.querySelector("td > input[value='Printer Friendly Version']").parentElement;
+        if (printButtonTd) {
+          printButtonTd.insertAdjacentElement("afterend", buttonTd);
+        }
       }
     }
   },
