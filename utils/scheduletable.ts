@@ -1,10 +1,7 @@
 import { ICalWeekday } from "ical-generator";
-import type { IntermediateEventData } from "./parse";
+import type { EventColumn, ScheduleTable } from "./types";
 import { isEventSameSubjectSameTime, isEventSameSubject } from "./utils";
 import * as R from "remeda";
-
-export type EventColumn = IntermediateEventData[];
-export type ScheduleTable = Record<ICalWeekday, EventColumn>;
 
 export function mergeSubjectByWeekday(
   events: IntermediateEventData[],
