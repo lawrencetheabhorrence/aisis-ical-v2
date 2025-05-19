@@ -1,16 +1,19 @@
 {
-  "name": "wxt-starter",
-  "description": "manifest.json description",
+  "name": "aisis-ical",
+  "description": "Export your class calendar to a format you can import to Google Calendar",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
+    "dev:chrome": "wxt -b chrome",
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",
+    "build:chrome": "wxt build -b chrome",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
+    "zip:chrome": "wxt zip -b chrome",
     "compile": "tsc --noEmit",
     "postinstall": "wxt prepare",
     "test": "vitest"
@@ -18,15 +21,15 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/chrome": "^0.0.280",
-    "lodash": "^4.17.21",
-    "remeda": "^2.21.1",
-    "typescript": "^5.6.3",
-    "vitest": "^3.0.8",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
+    "lodash": "^4.17.21",
     "prettier": "^3.5.3",
+    "remeda": "^2.21.1",
+    "typedoc": "^0.28.1",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1",
+    "vitest": "^3.0.8",
     "wxt": "^0.19.29"
   },
   "dependencies": {
