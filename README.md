@@ -6,28 +6,7 @@ This extension adds a button on the "My Class Schedule" page on AISIS that expor
 
 ## Installation
 
-As of now, the extension is only available as ZIP files which you can install on your browser. Uploading to the Firefox and Chrome extension stores will be coming soon.
-
-### From the ZIP Release
-
-#### Firefox
-
-1. Download the Release with name `aisis-ical-<version>-firefox.zip`
-2. Go to `about:addons`
-3. Click on the gear button beside "Manage Your Extensions"
-   ![image](https://github.com/user-attachments/assets/5bb36ced-2f57-4777-b1e2-dba2cea99050)
-4. Click on "Install Add-on From File..."
-   ![image](https://github.com/user-attachments/assets/56a23565-1bfa-4330-8254-2454518dded3)
-5. Select the zip file `aisis-ical-<version>-firefox.zip`.
-
-#### Chrome
-
-1. Download the Release with name `aisis-ical-<version>-chrome.zip`
-2. Extract this zip to a folder named "AISIS ICal"
-3. Go to `chrome://extensions`
-4. Click on the Load Unpacked button
-   ![image](https://github.com/user-attachments/assets/87f3566d-7ae9-4038-86eb-459ddb16910a)
-5. Select the "AISIS ICal" folder you just extracted
+The add-on is available on [Firefox Extensions](https://addons.mozilla.org/en-US/firefox/addon/aisis-ical/). The ZIP Releases and a Chrome Webstore link will be coming soon.
 
 ## Building from source
 
