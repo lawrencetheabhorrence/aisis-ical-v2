@@ -3,6 +3,7 @@ import {
   closestStartDate,
   isEventSameSubject,
   isEventSameSubjectSameTime,
+  startDatePerWeekday
 } from "../utils/utils";
 import { ICalWeekday } from "ical-generator";
 import { startDate, nowSem } from "../utils/constants";
@@ -33,13 +34,13 @@ const csci: IntermediateEventData = {
   end: dayjs().hour(13).minute(0),
 };
 
+test("Start date per weekday should give the closest date to the given start date that falls on that weekday", () => {
+  expect(startDatePerWeekday(dayjs("2024-06-05"), ICalWeekday.MO).isSame(dayjs("2024-06-10"))).toBe(true)
+})
+
 test("Closest start date should choose the earliest day within the given weekdays", () => {
-  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.FR])).toBe(
-    startDate[nowSem]["FR"],
-  );
-  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.TH])).toBe(
-    startDate[nowSem]["TH"],
-  );
+  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.FR]).day()).toBe(5);
+  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.TH]).day()).toBe(4);
 });
 
 test("is event same subject", () => {

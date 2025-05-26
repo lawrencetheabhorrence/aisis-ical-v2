@@ -1,43 +1,36 @@
 import { ICalWeekday } from "ical-generator";
 import dayjs from "./dayjs";
-import type { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 
 export const endDate: Record<string, Dayjs> = {
   "2024-0": dayjs("20240720"),
   "2024-1": dayjs("20241128"),
   "2024-2": dayjs("20250524"),
+  "2025-0": dayjs("20250609"),
+  "2025-1": dayjs("20250805"),
+  "2025-2": dayjs("20260112"),
 };
 export const nextSem = "2025-0";
 export const nowSem = "2024-2";
 
-export const startDate: Record<string, Record<ICalWeekday, Dayjs>> = {
-  "2024-0": {
-    SU: dayjs(),
-    MO: dayjs("2024-06-10"),
-    TU: dayjs("2024-06-11"),
-    WE: dayjs("2024-06-05"),
-    TH: dayjs("2024-06-06"),
-    FR: dayjs("2024-06-07"),
-    SA: dayjs("2024-06-08"),
-  },
-  "2024-1": {
-    SU: dayjs(),
-    MO: dayjs("2024-08-12"),
-    TU: dayjs("2024-08-13"),
-    WE: dayjs("2024-08-07"),
-    TH: dayjs("2024-08-08"),
-    FR: dayjs("2024-08-09"),
-    SA: dayjs("2024-08-10"),
-  },
-  "2024-2": {
-    SU: dayjs(),
-    MO: dayjs("2025-01-20"),
-    TU: dayjs("2025-01-21"),
-    WE: dayjs("2025-01-15"),
-    TH: dayjs("2025-01-16"),
-    FR: dayjs("2025-01-17"),
-    SA: dayjs("2025-01-18"),
-  },
+
+export const weekdayNumValue: Record<ICalWeekday, number> = {
+  SU: 0,
+  MO: 1,
+  TU: 2,
+  WE: 3,
+  TH: 4,
+  FR: 5,
+  SA: 6
+}
+
+export const startDate: Record<string, Dayjs> = {
+  "2024-0": dayjs("2024-06-05"),
+  "2024-1": dayjs("2024-08-07"),
+  "2024-2": dayjs("2025-01-15"),
+  "2025-0": dayjs("2025-06-09"),
+  "2025-1": dayjs("2025-08-05"),
+  "2025-2": dayjs("2026-01-12"),
 };
 
 export const weekdaysDict: Record<string, ICalWeekday> = {
