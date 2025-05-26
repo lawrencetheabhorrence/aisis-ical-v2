@@ -6,8 +6,8 @@ export default defineConfig({
   manifest: {
     browser_specific_settings: {
       gecko: {
-        id: "aisis-ical@aisis-ical.com",
-      },
-    },
-  },
+        id: "71ae5478-5e00-4f3d-8b68-bd76bf5aeebc"
+      }
+    }
+  }
 });
