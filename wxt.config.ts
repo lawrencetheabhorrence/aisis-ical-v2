@@ -6,8 +6,8 @@ export default defineConfig({
   manifest: {
     browser_specific_settings: {
       gecko: {
-        id: "71ae5478-5e00-4f3d-8b68-bd76bf5aeebc",
-      },
-    },
-  },
+        id: "{71ae5478-5e00-4f3d-8b68-bd76bf5aeebc}"
+      }
+    }
+  }
 });
