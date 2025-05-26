@@ -1,5 +1,9 @@
 import { expect, test } from "vitest";
-import type { ScheduleTable, EventColumn, IntermediateEventData } from "@/utils/types";
+import type {
+  ScheduleTable,
+  EventColumn,
+  IntermediateEventData,
+} from "@/utils/types";
 import {
   mergeCellsInColumn,
   mergeSubjectByWeekday,

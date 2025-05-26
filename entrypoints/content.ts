@@ -31,7 +31,7 @@ function createCalButton(calendar: ICalCalendar) {
   calLink.setAttribute(
     "href",
     "data:text/calendar;charset=utf8," +
-    encodeURIComponent(calendar.toString()),
+      encodeURIComponent(calendar.toString()),
   );
   calLink.setAttribute("download", "class_schedule.ics");
 

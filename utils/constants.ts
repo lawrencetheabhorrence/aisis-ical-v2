@@ -13,7 +13,6 @@ export const endDate: Record<string, Dayjs> = {
 export const nextSem = "2025-0";
 export const nowSem = "2024-2";
 
-
 export const weekdayNumValue: Record<ICalWeekday, number> = {
   SU: 0,
   MO: 1,
@@ -21,8 +20,8 @@ export const weekdayNumValue: Record<ICalWeekday, number> = {
   WE: 3,
   TH: 4,
   FR: 5,
-  SA: 6
-}
+  SA: 6,
+};
 
 export const startDate: Record<string, Dayjs> = {
   "2024-0": dayjs("2024-06-05"),

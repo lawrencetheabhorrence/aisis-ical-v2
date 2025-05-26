@@ -22,7 +22,6 @@ export function mergeSubjectByWeekday(
   return { ...checkedEvent, weekdays: Array.from(weekendsNew) };
 }
 
-
 function connectTwoEventsByTime(
   s1: IntermediateEventData,
   s2: IntermediateEventData,
@@ -37,9 +36,7 @@ function connectTwoEventsByTime(
 }
 
 function isConnecting(s1: IntermediateEventData, s2: IntermediateEventData) {
-  return (
-    s1.end.isSame(s2.start, "minute") || s2.end.isSame(s1.start, "minute")
-  );
+  return s1.end.isSame(s2.start, "minute") || s2.end.isSame(s1.start, "minute");
 }
 
 export function mergeCellsInColumn(cells: EventColumn): EventColumn {
