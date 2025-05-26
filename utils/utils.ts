@@ -1,11 +1,25 @@
 import type { Dayjs } from "dayjs";
 import { startDate, nowSem } from "./constants";
 import * as R from "remeda";
-import { weekdaysDict } from "./constants";
+import { weekdaysDict, weekdayNumValue } from "./constants";
 import { ICalWeekday } from "ical-generator";
 
+export function startDatePerWeekday(
+  beginDate: Dayjs,
+  weekday: ICalWeekday,
+): Dayjs {
+  const beginWeekday = beginDate.day();
+  const wdNum = weekdayNumValue[weekday];
+  if (beginWeekday <= wdNum) {
+    return beginDate.day(wdNum);
+  }
+  return beginDate.day(7 + wdNum);
+}
+
 export function closestStartDate(weekdays: ICalWeekday[]) {
-  const dates: Dayjs[] = weekdays.map((wd) => startDate[nowSem][wd]);
+  const dates: Dayjs[] = weekdays.map((wd) =>
+    startDatePerWeekday(startDate[nowSem], wd),
+  );
   let closestDate = dates[0];
   for (const date of dates) {
     // the earliest date is the closest date

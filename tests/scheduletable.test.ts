@@ -1,14 +1,17 @@
 import { expect, test } from "vitest";
+import type {
+  ScheduleTable,
+  EventColumn,
+  IntermediateEventData,
+} from "@/utils/types";
 import {
   mergeCellsInColumn,
   mergeSubjectByWeekday,
   simplifySchedule,
-  type ScheduleTable,
-  type EventColumn,
 } from "../utils/scheduletable";
 import { ICalWeekday } from "ical-generator";
 import dayjs from "../utils/dayjs";
-import { IntermediateEventData } from "@/utils/parse";
+import { startDatePerWeekday } from "@/utils/utils";
 
 const phys: IntermediateEventData = {
   section: "AW",
@@ -184,6 +187,7 @@ test("simplify whole sched", () => {
 
 test("set event to closest start date", () => {
   const result = setEventToClosestStartDate(phys);
-  expect(result.start.isSame(startDate[nowSem]["MO"], "day")).toBe(true);
-  expect(result.end.isSame(startDate[nowSem]["MO"], "day")).toBe(true);
+  const mondayStart = startDatePerWeekday(startDate[nowSem], ICalWeekday.MO);
+  expect(result.start.isSame(mondayStart, "day")).toBe(true);
+  expect(result.end.isSame(mondayStart, "day")).toBe(true);
 });
