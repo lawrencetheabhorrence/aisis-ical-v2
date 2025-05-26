@@ -22,41 +22,44 @@ export function mergeSubjectByWeekday(
   return { ...checkedEvent, weekdays: Array.from(weekendsNew) };
 }
 
+
+function connectTwoEventsByTime(
+  s1: IntermediateEventData,
+  s2: IntermediateEventData,
+): IntermediateEventData {
+  if (s1.start.isAfter(s2.start, "minute")) {
+    return connectTwoEventsByTime(s2, s1);
+  }
+
+  const result = { ...s1 };
+  result.end = s2.end;
+  return { ...s1, end: s2.end };
+}
+
+function isConnecting(s1: IntermediateEventData, s2: IntermediateEventData) {
+  return (
+    s1.end.isSame(s2.start, "minute") || s2.end.isSame(s1.start, "minute")
+  );
+}
+
 export function mergeCellsInColumn(cells: EventColumn): EventColumn {
   const merged: EventColumn = [];
-
-  function connectTwoEventsByTime(
-    s1: IntermediateEventData,
-    s2: IntermediateEventData,
-  ): IntermediateEventData {
-    if (s1.start.isAfter(s2.start, "minute")) {
-      return connectTwoEventsByTime(s2, s1);
-    }
-
-    const result = { ...s1 };
-    result.end = s2.end;
-    return { ...s1, end: s2.end };
-  }
-
-  function isConnecting(s1: IntermediateEventData, s2: IntermediateEventData) {
-    return (
-      s1.end.isSame(s2.start, "minute") || s2.end.isSame(s1.start, "minute")
-    );
-  }
-
   let currentEvent = cells[0];
 
   for (let i = 1; i < cells.length; ++i) {
     if (
       !isEventSameSubject(currentEvent, cells[i]) ||
       !isConnecting(currentEvent, cells[i])
-    )
-      break;
-
+    ) {
+      merged.push(currentEvent);
+      currentEvent = cells[i];
+    }
     currentEvent = connectTwoEventsByTime(currentEvent, cells[i]);
   }
 
-  merged.push(currentEvent);
+  if (!isEventSameSubject(currentEvent, merged[merged.length - 1])) {
+    merged.push(currentEvent);
+  }
   return merged;
 }
 

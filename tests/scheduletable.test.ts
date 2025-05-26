@@ -1,14 +1,12 @@
 import { expect, test } from "vitest";
+import type { ScheduleTable, EventColumn, IntermediateEventData } from "@/utils/types";
 import {
   mergeCellsInColumn,
   mergeSubjectByWeekday,
   simplifySchedule,
-  type ScheduleTable,
-  type EventColumn,
 } from "../utils/scheduletable";
 import { ICalWeekday } from "ical-generator";
 import dayjs from "../utils/dayjs";
-import { IntermediateEventData } from "@/utils/parse";
 import { startDatePerWeekday } from "@/utils/utils";
 
 const phys: IntermediateEventData = {
