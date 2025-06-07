@@ -6,9 +6,9 @@ export const endDate: Record<string, Dayjs> = {
   "2024-0": dayjs("20240720"),
   "2024-1": dayjs("20241128"),
   "2024-2": dayjs("20250524"),
-  "2025-0": dayjs("20250609"),
-  "2025-1": dayjs("20250805"),
-  "2025-2": dayjs("20260112"),
+  "2025-0": dayjs("20250719"),
+  "2025-1": dayjs("20251210"),
+  "2025-2": dayjs("20260523"),
 };
 export const nextSem = "2025-1";
 export const nowSem = "2025-0";
