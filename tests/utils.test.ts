@@ -43,8 +43,12 @@ test("Start date per weekday should give the closest date to the given start dat
 });
 
 test("Closest start date should choose the earliest day within the given weekdays", () => {
-  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.FR]).day()).toBe(5);
-  expect(closestStartDate([ICalWeekday.MO, ICalWeekday.TH]).day()).toBe(4);
+  expect(
+    closestStartDate([ICalWeekday.MO, ICalWeekday.FR], "2024-2").day(),
+  ).toBe(5);
+  expect(
+    closestStartDate([ICalWeekday.MO, ICalWeekday.TH], "2024-2").day(),
+  ).toBe(4);
 });
 
 test("is event same subject", () => {

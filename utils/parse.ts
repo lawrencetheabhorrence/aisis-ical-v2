@@ -21,7 +21,7 @@ function weekdayStartFromPrefix(prefix: string): {
   const timeStart = getHoursMinutes(timeStartStr);
   const timeEnd = getHoursMinutes(timeEndStr);
 
-  const day = closestStartDate(weekdays);
+  const day = closestStartDate(weekdays, nowSem);
   const start = day.hour(timeStart.hours).minute(timeStart.minutes);
   const end = day.hour(timeEnd.hours).minute(timeEnd.minutes);
   return { start, end, weekdays };
