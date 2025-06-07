@@ -16,7 +16,7 @@ export function startDatePerWeekday(
   return beginDate.day(7 + wdNum);
 }
 
-export function closestStartDate(weekdays: ICalWeekday[]) {
+export function closestStartDate(weekdays: ICalWeekday[], nowSem: string) {
   const dates: Dayjs[] = weekdays.map((wd) =>
     startDatePerWeekday(startDate[nowSem], wd),
   );
@@ -65,7 +65,7 @@ export function isEventSameSubjectSameTime(
 export function setEventToClosestStartDate(
   event: IntermediateEventData,
 ): IntermediateEventData {
-  const closestDate: Dayjs = closestStartDate(event.weekdays);
+  const closestDate: Dayjs = closestStartDate(event.weekdays, nowSem);
   const newStart = event.start
     .month(closestDate.month())
     .date(closestDate.date())
