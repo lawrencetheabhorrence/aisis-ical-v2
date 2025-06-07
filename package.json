@@ -2,7 +2,7 @@
   "name": "aisis-ical",
   "description": "Export your class calendar to a format you can import to Google Calendar",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "wxt",
