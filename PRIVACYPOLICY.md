@@ -1,0 +1,1 @@
+AISIS ICal does not collect nor share any data from their users. Any data that is used is for creating the calendar files and nothing else, nor is it saved anywhere else except on the users' own computers.
