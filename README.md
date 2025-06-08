@@ -6,7 +6,7 @@ This extension adds a button on the "My Class Schedule" page on AISIS that expor
 
 ## Installation
 
-The add-on is available on [Firefox Extensions](https://addons.mozilla.org/en-US/firefox/addon/aisis-ical/). The ZIP Releases and a Chrome Webstore link will be coming soon.
+The add-on is available on [Firefox Extensions](https://addons.mozilla.org/en-US/firefox/addon/aisis-ical/) and on [Chrome Webstore](https://chromewebstore.google.com/detail/aisis-ical/bngaiffoaacnfmdocgkajfkdcookgccp?authuser=3&hl=en&pli=1).
 
 ## Building from source
 
