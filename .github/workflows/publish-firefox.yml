@@ -1,0 +1,18 @@
+name: "Publish Firefox Extension"
+on:
+  push:
+    branches:
+    - main
+jobs:
+  publish:
+    runs-on: ubuntu/latest
+    steps:
+      - uses: mikeyaworski/firefox-addon@v1
+        with:
+          # uuid is only necessary when updating an existing addon,
+          # omitting it will create a new addon
+          uuid: '{71ae5478-5e00-4f3d-8b68-bd76bf5aeebc}'
+          xpi: build/aisis-ical.xpi
+          manifest: manifest.json
+          api-key: ${{ secrets.FIREFOX_API_KEY }}
+          api-secret: ${{ secrets.FIREFOX_API_SECRET }}
