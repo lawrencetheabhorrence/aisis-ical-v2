@@ -82,12 +82,12 @@ def get_dates_from_calendar(sy, calendar_html):
 for sy in school_years:
     if os.path.exists(get_csv_path(sy)):
         continue
-    html_calendar = get_html_path(sy)
+
     if not (os.path.exists(get_html_path(sy))):
         try:
-            html_calendar = fetch_calendar(sy)
+            fetch_calendar(sy)
         except ConnectionError:
             print("Failed to fetch calendar")
             continue
 
-    get_dates_from_calendar(sy, html_calendar)
+    get_dates_from_calendar(sy, get_html_path(sy))
