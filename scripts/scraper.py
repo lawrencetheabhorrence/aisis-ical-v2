@@ -27,7 +27,7 @@ def get_html_path(sy: str):
 def fetch_calendar(sy):
     ua = UserAgent()
     req = r.get(
-        "https://www.ateneo.edu/registrar/academic-calendar/2026-2027",
+        f"https://www.ateneo.edu/registrar/academic-calendar/{sy}",
         headers={"User-Agent": ua.random},
     )
     if req.status_code == 200:
@@ -38,10 +38,8 @@ def fetch_calendar(sy):
 
 
 def get_dates_from_row(first_cell_text, soup):
-    first_cell = soup.find(re.compile(r".+"), string=first_cell_text)
-    row = first_cell
-    while row.tag != "tr":
-        row = row.parent
+    first_cell = soup.find(re.compile(r".+"), string=re.compile(first_cell_text))
+    row = first_cell.find_parent("tr")
     row_strings = list(row.stripped_strings)
 
     date_strings = []
@@ -62,14 +60,14 @@ def get_dates_from_calendar(sy, calendar_html):
     if len(cal_html_text) > 0:
         cal_html_text = unicodedata.normalize("NFD", cal_html_text)
         print("parsing for ", sy)
-        soup = BeautifulSoup(cal_html_text)
-        start_dates = get_dates_from_row("Start of the Semester/Term", soup)
+        soup = BeautifulSoup(cal_html_text, "html.parser")
+        start_dates = get_dates_from_row(r"Start of the Semester/Term", soup)
         print(start_dates)
-        # end_class_dates = get_dates_from_row(
-        #     re.compile(r"Last day of regular classes.+"), soup
-        # )
+        end_class_dates = get_dates_from_row(
+            re.compile(r"Last day of regular classes.+"), soup
+        )
         # print(end_class_dates)
-        end_dates = get_dates_from_row("Last day of the Semester/Term", soup)
+        end_dates = get_dates_from_row(r"Last day of the Semester/Term", soup)
         print(end_dates)
 
         with open(get_csv_path(sy), "w") as dates_csv:
