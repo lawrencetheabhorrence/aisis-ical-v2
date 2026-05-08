@@ -71,7 +71,7 @@ def get_dates_from_calendar(sy, calendar_html):
         end_class_dates = get_dates_from_row(
             re.compile(r"Last day of regular classes.+"), soup
         )
-        # print(end_class_dates)
+        print(end_class_dates)
         end_dates = get_dates_from_row(r"Last day of the Semester/Term", soup)
         print(end_dates)
 
@@ -83,17 +83,23 @@ def get_dates_from_calendar(sy, calendar_html):
             dates_writer.writerow(["End of classes"] + end_class_dates)
             dates_writer.writerow(["End"] + end_dates)
 
+        json_data = [
+            {
+                "Semester": i,
+                "Start": start_dates[i],
+                "End of classes": end_class_dates[i],
+                "End": end_dates[i],
+            }
+            for i in range(3)
+        ]
         with open(get_json_path(sy), "w") as dates_json:
             print("Writing json for ", sy)
-            json_data = [
-                {
-                    "Semester": i,
-                    "Start": start_dates[i],
-                    "End of classes": end_class_dates[i],
-                    "End": end_dates[i],
-                }
-                for i in range(3)
-            ]
+            json.dump(json_data, dates_json)
+
+        next_or_now_path = (
+            f"./json/{'now' if sy == present_year else 'next'}-sem-dates.json"
+        )
+        with open(next_or_now_path, "w") as dates_json:
             json.dump(json_data, dates_json)
 
 
