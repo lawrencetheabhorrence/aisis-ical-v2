@@ -1,15 +1,36 @@
 import { ICalWeekday } from "ical-generator";
 import dayjs from "./dayjs";
 import { Dayjs } from "dayjs";
+import nowCal from "@/scripts/json/now-sem-dates.json";
+import nextCal from "@/scripts/json/next-sem-dates.json";
 
-export const endDate: Record<string, Dayjs> = {
-  "2024-0": dayjs("20240720"),
-  "2024-1": dayjs("20241128"),
-  "2024-2": dayjs("20250524"),
-  "2025-0": dayjs("20250719"),
-  "2025-1": dayjs("20251210"),
-  "2025-2": dayjs("20260523"),
-};
+interface SemDate {
+  [semKey: string]: Dayjs
+}
+
+function getEndDates() {
+  const endDates: SemDate = {};
+  for (const sem of nowCal) {
+    endDates[sem["Semester"]] = dayjs(sem["End"]);
+  }
+  for (const sem of nextCal) {
+    endDates[sem["Semester"]] = dayjs(sem["End"]);
+  }
+  return endDates;
+}
+
+function getStartDates() {
+  const startDates: SemDate = {};
+  for (const sem of nowCal) {
+    startDates[sem["Semester"]] = dayjs(sem["Start"]);
+  }
+  for (const sem of nextCal) {
+    startDates[sem["Semester"]] = dayjs(sem["Start"]);
+  }
+  return startDates;
+}
+
+export const endDate: SemDate = getEndDates();
 export const nextSem = "2026-0";
 export const nowSem = "2025-2";
 
@@ -23,14 +44,7 @@ export const weekdayNumValue: Record<ICalWeekday, number> = {
   SA: 6,
 };
 
-export const startDate: Record<string, Dayjs> = {
-  "2024-0": dayjs("2024-06-05"),
-  "2024-1": dayjs("2024-08-07"),
-  "2024-2": dayjs("2025-01-15"),
-  "2025-0": dayjs("2025-06-09"),
-  "2025-1": dayjs("2025-05-08"),
-  "2025-2": dayjs("2026-01-07"),
-};
+export const startDate: SemDate = getStartDates();
 
 export const weekdaysDict: Record<string, ICalWeekday> = {
   M: ICalWeekday.MO,
