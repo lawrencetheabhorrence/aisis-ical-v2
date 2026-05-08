@@ -8,6 +8,7 @@ import os
 import csv
 from pathlib import Path
 from fake_useragent import UserAgent
+import json
 
 present_year = dt.date.today().year
 school_years = [
@@ -17,7 +18,11 @@ school_years = [
 
 
 def get_csv_path(sy: str):
-    return Path(".") / f"{sy}-dates.csv"
+    return Path("./csv/") / f"{sy}-dates.csv"
+
+
+def get_json_path(sy: str):
+    return Path("./json/") / f"{sy}-dates.json"
 
 
 def get_html_path(sy: str):
@@ -78,9 +83,22 @@ def get_dates_from_calendar(sy, calendar_html):
             dates_writer.writerow(["End of classes"] + end_class_dates)
             dates_writer.writerow(["End"] + end_dates)
 
+        with open(get_json_path(sy), "w") as dates_json:
+            print("Writing json for ", sy)
+            json_data = [
+                {
+                    "Semester": i,
+                    "Start": start_dates[i],
+                    "End of classes": end_class_dates[i],
+                    "End": end_dates[i],
+                }
+                for i in range(3)
+            ]
+            json.dump(json_data, dates_json)
+
 
 for sy in school_years:
-    if os.path.exists(get_csv_path(sy)):
+    if os.path.exists(get_csv_path(sy)) and os.path.exists(get_json_path(sy)):
         continue
 
     if not (os.path.exists(get_html_path(sy))):
