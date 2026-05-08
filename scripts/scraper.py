@@ -11,10 +11,18 @@ from fake_useragent import UserAgent
 import json
 
 present_year = dt.date.today().year
-school_years = [
-    f"{present_year - 1}-{present_year}",
-    f"{present_year}-{present_year + 1}",
-]
+present_month = dt.date.today().month
+school_years = (
+    [
+        f"{present_year - 1}-{present_year}",
+        f"{present_year}-{present_year + 1}",
+    ]
+    if present_month < 6
+    else [
+        f"{present_year}-{present_year + 1}",
+        f"{present_year + 1}-{present_year + 2}",
+    ]
+)
 
 
 def get_csv_path(sy: str):
@@ -85,7 +93,7 @@ def get_dates_from_calendar(sy, calendar_html):
 
         json_data = [
             {
-                "Semester": i,
+                "Semester": f"{sy.split('-')[0]}-{i}",
                 "Start": start_dates[i],
                 "End of classes": end_class_dates[i],
                 "End": end_dates[i],
@@ -97,7 +105,7 @@ def get_dates_from_calendar(sy, calendar_html):
             json.dump(json_data, dates_json)
 
         next_or_now_path = (
-            f"./json/{'now' if sy == present_year else 'next'}-sem-dates.json"
+            f"./json/{'now' if sy == school_years[0] else 'next'}-sem-dates.json"
         )
         with open(next_or_now_path, "w") as dates_json:
             json.dump(json_data, dates_json)
