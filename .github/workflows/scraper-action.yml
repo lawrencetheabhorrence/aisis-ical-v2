@@ -20,8 +20,8 @@ jobs:
         curl -LsSf https://astral.sh/uv/install.sh | sh
     - name: Install Dependencies
       run: |
-        uv install
+        uv sync
     - name: Run Scraper Script
       run: |
         cd scripts
-        python3 ./scraper.py
+        uv run ./scraper.py
